@@ -43,8 +43,6 @@ def block_Unconv( name, botton, top, s_filer=256, n_filer=64, offset="(1,0,0)", 
     ]
 
 
-
-
 def block_Res( num, name, botton, top, s_filer=256, n_filer=64, offset="(0,0,0)", size=(32,32,3.5), opacity=0.5 ):
     lys = []
     layers = [ *[ '{}_{}'.format(name,i) for i in range(num-1) ], top]
@@ -64,11 +62,11 @@ def block_Res( num, name, botton, top, s_filer=256, n_filer=64, offset="(0,0,0)"
                 "{}".format( name ) 
                 )
             ]
+        offset = '(0.2,0,0)'
         botton = name
-        lys+=ly
-    
+        lys+=ly    
     lys += [
-        to_skip( of=layers[1], to=layers[-2], pos=1.25),
+        to_skip( of=layers[0], to=layers[-1], pos=1.25),
     ]
     return lys
 
