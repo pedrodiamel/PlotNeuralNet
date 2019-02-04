@@ -34,6 +34,38 @@ def to_begin():
 
 # layers definition
 
+def Input( pathfile, to='(0,0,0)', width=8, height=8 ):
+    return r"""
+\node[canvas is zy plane at x=0] (temp) at """+ to +""" {\includegraphics[width="""+ str(width) +"cm"+""",height="""+ str(height)+ "cm"+"""]{"""+ pathfile +"""}};
+"""
+
+# Conv
+def Convolution( name, lb_size=256, lb_num=64, offset='(0,0,0)', to='(0,0,0)', size=(32,32,1) , rgb=(255,255,255), opacity=1.0, caption=" " ):
+    return r"""
+\pic[shift={"""+ offset +"""}] at """+ to +""" 
+    {Box={
+        name=""" + name +""",
+        caption="""+ caption +r""",
+        xlabel={{"""+ str(lb_num) +""", }},
+        zlabel="""+ str(lb_size) +""",
+        fill={rgb,255:red,"""+ str(rgb[0]) + """; green,"""+ str(rgb[1]) + """; blue,"""+ str(rgb[2]) + """},
+        opacity="""+ str(opacity) +""",
+        depth="""+ str(size[0]) +""",
+        height="""+ str(size[1]) +""",
+        width="""+ str(size[2]) +"""        
+        }
+    };
+"""
+
+
+
+
+
+
+
+# ////////
+
+
 def to_input( pathfile, to='(-3,0,0)', width=8, height=8 ):
     return r"""
 \node[canvas is zy plane at x=0] (temp) at """+ to +""" {\includegraphics[width="""+ str(width)+"cm"+""",height="""+ str(height)+"cm"+"""]{"""+ pathfile +"""}};
@@ -163,6 +195,7 @@ def to_SoftMax( name, s_filer=10, offset="(0,0,0)", to="(0,0,0)", width=1.5, hei
         }
     };
 """
+
 
 
 def to_connection( of, to):

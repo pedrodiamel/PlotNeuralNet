@@ -1,7 +1,40 @@
 
 from .tikzeng import *
 
-#define new block
+#define new layers
+
+def ResidualBlock( num, name, botton, top, lb_size=256, lb_num=64, offset='(0,0,0)', to='(0,0,0)', size=(32,32,1) , rgb=(255,255,255), opacity=1.0, caption=" " ):
+    lys = []
+    layers = [ *[ '{}_{}'.format(name,i) for i in range(num-1) ], top]
+    for name in layers:        
+        ly = [ Convolution( 
+                    name    ='{}'.format( name ),       
+                    offset  =offset, 
+                    to      ="({}-east)".format( botton ),   
+                    lb_size =str(lb_size), 
+                    lb_num  =str(lb_num), 
+                    size    =size
+                ),
+                to_connection( 
+                    "{}".format( botton  ), 
+                    "{}".format( name ) 
+                )
+            ]
+        offset = '(0.1,0,0)'
+        botton = name
+        lys+=ly    
+    lys += [
+        to_skip( of=layers[0], to=layers[-1], pos=1.25),
+    ]
+    return lys
+
+
+
+
+
+
+#//////
+
 def block_2ConvPool( name, botton, top, s_filer=256, n_filer=64, offset="(1,0,0)", size=(32,32,3.5), opacity=0.5 ):
     return [
     to_ConvConvRelu( 
